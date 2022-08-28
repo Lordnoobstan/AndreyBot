@@ -1,5 +1,7 @@
 """This file will contain SQL related functions"""
 import sqlite3
+from os import mkdir
+from os.path import exists
 
 from __init__ import root_dir
 
@@ -29,7 +31,17 @@ def batch_create_message(guild_id: str, messages: [str]) -> None:
     :param guild_id: The messages' associated guild.
     :param messages: A list of the message contents.
     """
-    [create_message(guild_id, message) for message in messages]
+    with sqlite3.connect(records_path) as connection:
+        cursor: sqlite3.Cursor = connection.cursor()
+        queries: [
+            tuple[str, str]
+        ] = []  # This list will contain the guild id along with the message.
+        [queries.append((guild_id, message)) for message in messages]
+
+        try:
+            cursor.executemany("INSERT INTO messages VALUES(?, ?)", queries)
+        except sqlite3.Error as error:
+            print("An error occurred while batch creating messages.", error)
 
 
 def read_messages(guild_id: str) -> [str]:
@@ -51,6 +63,10 @@ def initialize() -> None:
     This function will initialize the records' database.
     It will insert the schema if it doesn't already exist.
     """
+    # Make sure to create a resources directory if it doesn't exist.
+    if not exists(resources_path):
+        mkdir(resources_path, 0o666)
+
     with sqlite3.connect(records_path) as connection:
         cursor: sqlite3.Cursor = connection.cursor()
 
