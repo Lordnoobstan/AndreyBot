@@ -1,9 +1,10 @@
 """This file will contain SQL related functions"""
-import os.path
 import sqlite3
 
+from __init__ import root_dir
+
 # Fetch the workspaces' resources folder.
-resources_path: str = os.path.abspath(os.pardir) + "\\resources"
+resources_path: str = root_dir + "\\resources"
 records_path: str = resources_path + "\\records.db"
 
 
