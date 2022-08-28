@@ -4,7 +4,7 @@ from typing import Any
 
 import discord
 
-from markov import Markov
+from src.markov import Markov
 
 
 class DiscordClient(discord.Client):

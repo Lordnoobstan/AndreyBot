@@ -11,7 +11,7 @@ jobs:
     - name: Run tests and collect coverage
       env:
         TOKEN: ${{ secrets.TOKEN }}
-      run: pytest --cov .
+      run: pytest --cov src
     - name: Upload coverage reports to Codecov
       run: |
         curl -Os https://uploader.codecov.io/latest/linux/codecov
