@@ -1,6 +1,8 @@
 """Contains Discord bot related functionality. It'll bridge the python markov chain framework to the user."""
 
-from typing import Any
+import os
+from threading import Thread
+from typing import Any, Optional
 
 import discord
 
@@ -19,12 +21,24 @@ class DiscordClient(discord.Client):
         :param intents: The intents of the bot.
         :param options: Other miscellaneous options.
         """
+        self.thread: Optional[Thread] = None
         self.markov: Markov = (
             Markov()
         )  # Create a unique markov object for this instance.
         super().__init__(
             intents=intents, **options
         )  # Make sure to call the init from our superclass.
+
+    def threaded_run_bot(self, token: str, is_daemon: bool = False) -> None:
+        """
+        This method runs the Discord bot on a new thread.
+        :param token: The Discord bot token.
+        :param is_daemon: A boolean indicating whether the thread should be a daemon
+        """
+        self.thread = Thread(target=self.run, args=(token,))
+        self.thread.daemon = is_daemon
+
+        self.thread.start()
 
     async def on_ready(self) -> None:
         """
@@ -41,11 +55,15 @@ class DiscordClient(discord.Client):
         pass
 
 
-def run_bot(token: str) -> None:
+def run_bot(is_daemon: bool = False) -> DiscordClient:
     """
     This function will create and run a new Discord bot.
-    :param token: The unique token associated with the bot.
+    :param is_daemon: A boolean indicating whether the thread should be a daemon
     """
     # Create our Discord client and run it.
     # I decided to use a simple one liner here, as there is not much going on.
-    DiscordClient(intents=discord.Intents.none()).run(token)
+    token: str = os.environ["TOKEN"]
+    client: DiscordClient = DiscordClient(intents=discord.Intents.none())
+    client.threaded_run_bot(token, is_daemon)
+
+    return client

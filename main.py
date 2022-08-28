@@ -1,5 +1,5 @@
 """This file will contain the entrypoint. It'll start the Discord bot."""
-
+import os
 from configparser import ConfigParser
 
 from src.bot import run_bot
@@ -15,13 +15,13 @@ def main() -> None:
     config.read("config.properties")  # Read the config.properties file.
 
     # Fetch the associated configurations.
-    discord_token: str = config["discord"]["token"]
+    os.environ["TOKEN"] = config["discord"]["token"]
 
     # Initialize the SQL.
     initialize()
 
     # Finally, start the bot.
-    run_bot(discord_token)
+    run_bot()
 
 
 if __name__ == "__main__":
