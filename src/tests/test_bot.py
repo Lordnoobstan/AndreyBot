@@ -2,4 +2,6 @@ import os
 
 from src.bot import run_bot
 
-client = run_bot(is_daemon=True)
+
+def test_bot():
+    run_bot(is_daemon=True)
