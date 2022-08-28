@@ -1,5 +1,3 @@
-import os
-
 from src.bot import run_bot
 
 
