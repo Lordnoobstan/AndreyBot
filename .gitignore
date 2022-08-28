@@ -1,5 +1,8 @@
+# Local database files
+*.db
+
 # Config files
-config.properties
+*.properties
 
 # IDE files
 .idea
