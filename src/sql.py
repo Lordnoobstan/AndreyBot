@@ -53,7 +53,7 @@ def read_messages(guild_id: str) -> [str]:
         cursor: sqlite3.Cursor = connection.cursor()
 
         try:
-            cursor.execute("SELECT * FROM messages where id=?", [guild_id])
+            cursor.execute("SELECT message FROM messages where id=?", [guild_id])
 
             return cursor.fetchall()
         except sqlite3.Error as error:
