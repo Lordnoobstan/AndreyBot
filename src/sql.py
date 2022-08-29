@@ -3,7 +3,7 @@ import sqlite3
 from os import mkdir
 from os.path import exists
 
-from __init__ import root_dir
+from src.__init__ import root_dir
 
 # Fetch the workspaces' resources folder.
 resources_path: str = root_dir + "\\resources"
@@ -54,6 +54,8 @@ def read_messages(guild_id: str) -> [str]:
 
         try:
             cursor.execute("SELECT * FROM messages where id=?", [guild_id])
+
+            return cursor.fetchall()
         except sqlite3.Error as error:
             print("An error occurred while reading messages.", error)
 
