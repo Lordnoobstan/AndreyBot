@@ -13,8 +13,6 @@ repos:
   - id: check-ast
   - id: trailing-whitespace
   - id: end-of-file-fixer
-  - id: check-merge-conflict
-    exclude: .*\.rst
   - id: check-symlinks
   - id: check-case-conflict
   - id: check-json
@@ -36,9 +34,3 @@ repos:
   rev: 22.6.0
   hooks:
   - id: black
-
-- repo: https://github.com/MarcoGorelli/absolufy-imports
-  rev: v0.3.1
-  hooks:
-  - id: absolufy-imports
-    exclude: docs/plasmapy_sphinx
