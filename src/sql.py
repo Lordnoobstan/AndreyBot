@@ -1,4 +1,5 @@
 """This file will contain SQL related functions"""
+
 import sqlite3
 from os import mkdir
 from os.path import exists
@@ -33,9 +34,9 @@ def batch_create_message(guild_id: str, messages: [str]) -> None:
     """
     with sqlite3.connect(records_path) as connection:
         cursor: sqlite3.Cursor = connection.cursor()
-        queries: [
-            tuple[str, str]
-        ] = []  # This list will contain the guild id along with the message.
+        queries: [tuple[str, str]] = (
+            []
+        )  # This list will contain the guild id along with the message.
         [queries.append((guild_id, message)) for message in messages]
 
         try:
