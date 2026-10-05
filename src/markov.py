@@ -1,4 +1,5 @@
 """Contains Markov chain related functionality"""
+
 import markovify
 
 
