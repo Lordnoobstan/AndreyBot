@@ -1,4 +1,5 @@
 """This file will contain the entrypoint. It'll start the Discord bot."""
+
 import os
 from configparser import ConfigParser
 
